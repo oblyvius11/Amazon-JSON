@@ -1,15 +1,4 @@
-/**
- * file:  proj3-testmain.cpp
- * author:  Aiden Grajo
- * course: CSI 1440
- * assignment:  project 3
- * due date:  2/13/2023
- *
- * date modified:  2/12/2023
- *  - Testing functions
- *
- * This file tests the functions written.
- */
+
 
 #include <iostream>
 #include <sstream>
