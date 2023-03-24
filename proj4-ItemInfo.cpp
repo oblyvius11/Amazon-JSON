@@ -1,15 +1,3 @@
-/**
- * file: proj4-ItemInfo.cpp
- * author: Prof. Aars
- * course: CSI 1440
- * assignment: project 4
- * due date: 2/27/2023
- *
- * date modified:  2/27/2023
- *    - file created
- *
- * This file is the function definitions file.
- */
 
 #include "proj4-ItemInfo.hpp"
 #include <cmath>
