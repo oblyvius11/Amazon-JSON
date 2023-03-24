@@ -1,138 +1,100 @@
 /**
- * file: proj4-main.cpp
- * author: Prof. Aars
+ * file:  proj3-testmain.cpp
+ * author:  Aiden Grajo
  * course: CSI 1440
- * assignment: project 4
- * due date: 2/27/2023
+ * assignment:  project 3
+ * due date:  2/13/2023
  *
- * date modified:  2/27/2023
- *    - file created
+ * date modified:  2/12/2023
+ *  - Testing functions
  *
- * This file is the main file.
+ * This file tests the functions written.
  */
 
 #include <iostream>
-#include "proj4-ItemInfo.hpp"
-#include <fstream>
+#include <sstream>
+#include "proj3-MyString.h"
 
 using namespace std;
 
-void itemResize(ItemInfo*& a, int &size) {
-    size *= 2;
-
-    ItemInfo* newItem = new ItemInfo[size];
-
-    for (int i = 0; i < size/2; i++) {
-        newItem[i] = a[i];
-    }
-
-    delete[] a;
-
-    a = nullptr;
-
-    a = newItem;
-}
-
-char* strToCstr(string a) {
-    int size = a.size();
-    char* b = new char[size + 1];
-
-    for (int i = 0; i < size; i++) {
-        b[i] = a[i];
-    }
-    b[size] = '\0';
-
-    return b;
-    delete[] b;
-}
-
-
 int main()
 {
-    ifstream file;
-    int i = 0;
-    string val;
-    const char* id;
-    const char* desc;
-    const char* manuCost;
-    const char* price;
-    ItemInfo* item = new ItemInfo [2];
-    int size = 2;
-
-    file.open("proj4-productServices.csv");
-
-    while (getline(file, val, ',')) {
-        id = strToCstr(val);
-        getline(file, val, ',');
-        desc = strToCstr(val);
-        getline(file, val, ',');
-        manuCost = strToCstr(val);
-        getline(file, val);
-        price = strToCstr(val);
+    const char str[] = "Aiden";
+    stringstream testFile;
 
 
 
-        item[i].setItemId(id);
-        item[i].setDescription(desc);
-        item[i].setManCost(manuCost);
-        item[i].setSellPrice(price);
+    cout << "Creating MyString object named test1 and";
+    cout << " assigning the \"Aiden\" to the object." << endl << endl;
 
-        i++;
+    MyString test1(str);
 
-        if (i >= size) {
-            itemResize(item, size);
-        }
+    cout << "Printing the data of the  object using overloaded output operator: " << test1 << endl;
 
-        delete[] id;
-        delete[] desc;
-        delete[] manuCost;
-        delete[] price;
+    MyString test2(" Grajo");
+
+    cout << "Creating MyString object named test2 and";
+    cout << " assigning the \" Grajo\" to the object using string parameters." << endl << endl;
+
+    cout << "Adding the data of the  test2 object to the test1 object: " << endl;
+
+    test1 += test2;
+
+    cout << "Result: " << test1;
+    cout << "Testing size return function: " << test1.length() << endl << endl;
+
+    MyString test3;
+
+    cout << "Testing getline function using stringstream containing \"Genuine confusion\": " << endl;
+
+    testFile.str("Genuine confusion");
+    test3.getline(testFile);
+
+    cout << "Result of Test 3 Data: " << test3;
+    cout << "Size: " << test3.length() << endl << endl;
+
+    cout << "Testing overloaded assignment operator by assigning test4 with test3's data. " << endl;
+
+    MyString test4 = test3;
+
+    cout << "Test4 Data: " << test4 << endl;
+
+    cout << "Testing overloaded comparison operator using test3 and test4. ";
+    cout << "Expecting to be the same. " << endl;
+
+    cout << "Result: ";
+
+    if (test3 == test4) {
+        cout << "Same data" << endl;
     }
-
-    cout << "NORMAT FORMAT: " << endl << endl;
-
-    for (int j = 0; j < i; j++) {
-        item[j].displayItemInfo(cout);
+    else {
+        cout << "Data differs." << endl;
     }
     cout << endl;
 
-    cout << "SORTING ARRAY OF ITEMS BY PROFIT" << endl << endl;
+    cout << "Testing overloaded bracket operator using test4. ";
+    cout << "Expecting \"n\"." << endl;
+
+    cout << "Result: " << test4[2] << endl;
+
+    cout << "Testing copy constructor by assigning test5 with test3. ";
+    cout << "Expecting same data as test3." << endl;
+
+    MyString test5(test4);
+
+    cout << "Result: " << test5 << endl;
+
+    cout << "Testing concatenation operator using test1 and test2." << endl;
+
+    test1 = test1 + test2;
 
 
-    for (int j = 0; j < i - 1; j++) {
-        for (int k = 0; k < i - j - 1; k++) {
-            if (item[k].calcProfit() < item[k + 1].calcProfit()) {
-                ItemInfo temp = item[k];
-                item[k] = item[k + 1];
-                item[k + 1] = temp;
-            }
-        }
-    }
+    cout << "Expecting Aiden Grajo Grajo." << endl;
+    cout  << "Result: " << test1 << endl;
 
-    string position[5];
 
-    position[0] = "firstItem";
-    position[1] = "secondItem";
-    position[2] = "thirdItem";
-    position[3] = "fourthItem";
-    position[4] = "fifthItem";
 
-    cout << "AMAZON FORMAT: " << endl << endl;
 
-    cout << "\"Aiden's Store\": [" << endl;
-
-    for (int i = 0; i < 5; i++) {
-        cout << "\t\t\"" << position[i] << "\": {" << endl;
-        item[i].toAmazonJSON(cout);
-        cout << "\t\t}," << endl;
-    }
-    cout << "]" << endl;
-
-    file.close();
-
-    delete[] item;
 
     return 0;
 }
-
-
